@@ -3,12 +3,7 @@ services:
     name: resume-analyzer
     env: python
     plan: free
-    buildCommand: |
-      cd client
-      npm install
-      npm run build
-      cd ../server
-      python -m pip install -r requirements.txt
+    buildCommand: cd client && npm install && npm run build && cd ../server && python -m pip install -r requirements.txt
     startCommand: cd server && python -m flask run --host 0.0.0.0
     envVars:
       - key: GEMINI_API_KEY
