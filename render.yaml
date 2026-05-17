@@ -9,7 +9,7 @@ services:
       npm run build
       cd ../server
       python -m pip install -r requirements.txt
-    startCommand: cd server && python app.py
+    startCommand: cd server && python -m flask run --host 0.0.0.0
     envVars:
       - key: GEMINI_API_KEY
         value: ""
