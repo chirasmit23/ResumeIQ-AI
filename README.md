@@ -95,12 +95,8 @@ GEMINI_API_KEY=<your-api-key>
 - API requests still use `/api/*`
 - No cross-domain proxy configuration is required in production
 
-## Quick Start
 
-From the repo root, run:
 
-```powershell
-.\start-dev.ps1
-```
+https://github.com/user-attachments/assets/f2354751-b212-45a2-8fa2-529fa6a8994f
 
-This script installs the backend and frontend dependencies, then launches the Flask API and Vite frontend together.
+
