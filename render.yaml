@@ -4,7 +4,7 @@ services:
     env: python
     plan: free
     buildCommand: cd client && npm install && npm run build && cd ../server && python -m pip install -r requirements.txt
-    startCommand: cd server && python app.py
+    startCommand: cd server && gunicorn --bind 0.0.0.0:$PORT app:app
     envVars:
       - key: GEMINI_API_KEY
         value: ""
