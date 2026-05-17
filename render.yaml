@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: resume-analyzer
+    env: python
+    plan: free
+    buildCommand: |
+      cd client
+      npm install
+      npm run build
+      cd ../server
+      python -m pip install -r requirements.txt
+    startCommand: cd server && python app.py
+    envVars:
+      - key: GEMINI_API_KEY
+        value: ""

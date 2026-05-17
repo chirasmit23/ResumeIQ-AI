@@ -1,0 +1,6 @@
+# Root ignores
+node_modules
+client/dist
+server/venv
+.env
+.DS_Store
