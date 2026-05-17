@@ -2,3 +2,8 @@
 Flask-Cors
 python-dotenv
 requests
+Flask
+Flask-Cors
+python-dotenv
+requests
+gunicorn
