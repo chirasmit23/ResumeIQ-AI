@@ -7,14 +7,21 @@ from routes.upload import upload_bp
 from routes.analyze import analyze_bp
 from routes.health import health_bp
 
-build_dir = Path(__file__).resolve().parents[1] / 'client' / 'dist'
+
+server_dir = Path(__file__).resolve().parent
+project_root = server_dir.parent
+build_dir = project_root / 'client' / 'dist'
+
+if not build_dir.exists():
+    print(f"Warning: {build_dir} does not exist. Static files won't be served.")
+    build_dir = server_dir 
+
 app = Flask(__name__, static_folder=str(build_dir), static_url_path='')
 app.config.from_object(Config)
 app.config['UPLOAD_FOLDER'] = Config.UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = Config.MAX_CONTENT_LENGTH
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-# Ensure upload folder exists
 Path(app.config['UPLOAD_FOLDER']).mkdir(parents=True, exist_ok=True)
 
 app.register_blueprint(health_bp, url_prefix='/api')
@@ -24,9 +31,10 @@ app.register_blueprint(analyze_bp, url_prefix='/api')
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve_frontend(path: str):
-    if path and (build_dir / path).exists():
-        return send_from_directory(app.static_folder, path)
-    return send_from_directory(app.static_folder, 'index.html')
+    file_path = build_dir / path
+    if path and file_path.exists() and file_path.is_file():
+        return send_from_directory(str(build_dir), path)
+    return send_from_directory(str(build_dir), 'index.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
